@@ -1,6 +1,5 @@
 <?php
 
-// TODO:: Improve, Goes on Timeout
 $testCases = (int) fgets(STDIN);
 
 $answers = [];
@@ -11,13 +10,26 @@ for ($i=0; $i < $testCases; $i++) {
     $length = (int) $fistLine[0];
     $target = (int) $fistLine[1];
 
-    $cells = fgets(STDIN);
+    $string = fgets(STDIN);
+    $cells = str_split($string);
 
-    $min = null;
+    $firstArrayValue = array_count_values(str_split(substr($string, 0, $target)));
+    $current = !empty($firstArrayValue['W']) ? $firstArrayValue['W'] : 0;
+    $min = $current;
 
-    for ($j=0; $j < $length - $target + 1; $j++) {
-        $value = (str_split(substr($cells, $j, $target)))['W'] ?? 0;
-        $min = $min === null ? $value : ($min > $value ? $value : $min);
+    for ($j=$target; $j < $length; $j++) {
+        // Remove First
+        if ($cells[$j - $target] === 'W') {
+            $current--;
+        }
+        // Add to the End
+        if ($cells[$j] === 'W') {
+            $current++;
+        }
+        // Check Min Value
+        if ($min > $current) {
+            $min = $current;
+        }
     }
 
     $answers[] = $min;
