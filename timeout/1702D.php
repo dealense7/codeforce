@@ -1,6 +1,5 @@
 <?php
 
-// TODO:: Improve, Goes on Timeout
 $testCases = fgets(STDIN);
 $answers = [];
 $alphas = array_flip(range('a', 'z'));
